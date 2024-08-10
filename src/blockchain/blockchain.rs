@@ -21,7 +21,7 @@ impl BlockChain {
         self.chain.push(genesis_block);
     }
 
-    fn add_block(&mut self, transactions: Vec<String>) {
+    pub fn add_block(&mut self, transactions: Vec<String>) {
         let previous_hash = self.chain.last().unwrap().hash.clone();
         let mut block = Block::new(self.chain.len() as u64, transactions, previous_hash);
         block.mine_block(self.difficulty);
