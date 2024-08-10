@@ -27,4 +27,20 @@ impl BlockChain {
         block.mine_block(self.difficulty);
         self.chain.push(block);
     }
+
+    pub fn is_chain_valid(&self) -> bool {
+        for i in 1..self.chain.len() {
+            let current_block = &self.chain[i];
+            let previous_block = &self.chain[i-1];
+
+            if current_block.hash != current_block.calculate_hash() {
+                return false;
+            }
+
+            if current_block.previous_hash != previous_block.hash {
+                return false;
+            }
+        }
+        true
+    }
 }
