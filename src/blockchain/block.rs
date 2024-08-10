@@ -44,6 +44,15 @@ impl Block {
         hash_util::calculate_sha256(&data)
     }
 
+    pub fn mine_block(&mut self, difficulty: usize) {
+        let target = "0".repeat(difficulty);
+        while &self.hash[..difficulty] != target {
+            self.nonce += 1;
+            self.hash = self.calculate_hash();
+        }
+        println!("Block mined: {}", self.hash);
+    }
+
     fn current_timestamp() -> u64 {
         SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs()
     }
